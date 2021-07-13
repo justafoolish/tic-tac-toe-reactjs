@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.scss";
+import GameBoard from "./GameBoard";
+import Menu from "./Menu";
 
-function App() {
+export default function App() {
+  const [reset, setReset] = React.useState(false);
+  const handleResetGame = () => {
+    setReset(!reset)
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <main>
+        <GameBoard reset={reset} SubmitReset={handleResetGame} />
+      </main>
+      <Menu resetGame={handleResetGame} />
+    </>
   );
 }
-
-export default App;

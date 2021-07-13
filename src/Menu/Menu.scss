@@ -1,0 +1,26 @@
+.menu {
+    width: 100%;
+    min-height: 20vh;
+    display: grid;
+    place-items: center;
+  
+    button {
+      padding: 0.75rem 2.25rem;
+      cursor: pointer;
+      border: none;
+      background: #2c2e43;
+      color: #fff;
+      transition: background 0.35s ease;
+      font-weight: bold;
+      font-size: 1rem;
+  
+      &:hover {
+        background: #595260;
+        transition: background 0.35s ease;
+      }
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+  }
