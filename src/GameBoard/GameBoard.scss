@@ -1,8 +1,8 @@
 .game-board {
-    height:inherit;   
-    display: grid;
-    grid-template-columns: repeat(3, 10vw);
-    grid-template-rows: repeat(3, 10vw);
-    place-items: center;
-    grid-gap: .75rem;
+  height: inherit;
+  display: grid;
+  grid-template-columns: repeat(3, 10vw);
+  grid-template-rows: repeat(3, 10vw);
+  place-items: center;
+  grid-gap: 0.75rem;
 }
