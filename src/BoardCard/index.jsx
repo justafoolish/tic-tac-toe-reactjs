@@ -5,41 +5,40 @@ import CardX from "./CardX";
 import CardO from "./CardO";
 
 function BoardCard(props) {
-  const { turn, onSubmit, item, allowEnter } = props;
+  const { turn, onSubmit, item, allowEnter, winCard } = props;
   const { id, status } = item;
   const [card, setCard] = React.useState("");
 
   const setActive = () => {
     if (status === "" && allowEnter) {
-      console.log("previus : " + turn);
+      console.log("Clicked");
+      //   console.log("previus : " + turn);
       const value = turn % 2 === 0 ? "x" : "o";
 
       onSubmit(id, value);
     }
   };
-  const alertHover = () => {
-    console.log("hover current: " + turn);
-  };
 
   React.useEffect(() => {
+    console.log("on card effect " + turn);
     if (status === "x") {
-      setCard(<CardX active={true} />);
+      setCard(<CardX active={true} winner={winCard} />);
     } else if (status === "o") {
-      setCard(<CardO active={true} />);
+      setCard(<CardO active={true} winner={winCard} />);
     } else if (!allowEnter) {
       setCard("");
     } else {
       if (turn % 2 === 0) {
-        setCard(<CardX active={false} />);
+        setCard(<CardX active={false} winner={false} />);
       } else {
-        setCard(<CardO active={false} />);
+        setCard(<CardO active={false} winner={false} />);
       }
     }
-  }, [turn, status, allowEnter]);
+  }, [turn, status, allowEnter, winCard]);
+
   return (
-    <div className="card" onClick={setActive} onMouseEnter={alertHover}>
-      {console.log("enter : " + allowEnter)}
-      <div className="card--flipback">{card}</div>
+    <div className="card" onClick={setActive}>
+      {card}
     </div>
   );
 }

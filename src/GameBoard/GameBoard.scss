@@ -1,8 +1,15 @@
 .game-board {
-  height: inherit;
+  height: 100%;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 10vw);
-  grid-template-rows: repeat(3, 10vw);
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
   place-items: center;
   grid-gap: 0.75rem;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
