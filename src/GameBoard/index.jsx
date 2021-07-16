@@ -23,7 +23,7 @@ function GameBoard(props) {
   const [line, setLine] = React.useState([]);
 
   const handleNextTurn = (id, value) => {
-    console.log("On handleNextTurn " + turn);
+    // console.log("On handleNextTurn " + turn);
     //console.log(item);
     let newItems = [...items];
     const index = newItems.findIndex((box) => box.id === id);
@@ -38,7 +38,7 @@ function GameBoard(props) {
 
   React.useEffect(() => {
     if (reset) {
-      const resetBoard = async () => {
+      const resetBoard = () => {
         setTurn(0);
         setLine([]);
         setItem(listItem);
@@ -74,46 +74,40 @@ function GameBoard(props) {
         setLine([2, 4, 6]);
         return true;
       }
-
       return false;
     };
+
     const checkNull = () => {
       return items.some((item) => item.status === "");
     };
 
     const checkValue = turn % 2 === 0 ? "o" : "x";
     if (checkGame(checkValue)) {
-      handleGameOver(true, checkValue + " Thắng");
       setAllowEnter(false);
       setTurn(turn - 1);
-
-    } else if (!checkNull()) {
+    } else if (!checkNull() && !checkGame("x") && !checkGame("o")) {
       console.log(items);
-      handleGameOver(true, "Hoà");
       setAllowEnter(false);
-      setTurn(0);
+    } else if (turn % 2 !== 0 && checkNull() && allowEnter) {
+      let index = 0;
+      while (true) {
+        index = Math.floor(Math.random() * items.length);
+        if (items[index].status === "") break;
+      }
+      if (index !== -1) {
+        let newItems = [...items];
+        newItems[index].status = "o";
+        setItem(newItems);
+        if (turn < 9) {
+          setTurn(turn + 1);
+        }
+      }
     }
-    // else if (turn % 2 === 0 && turn < 9) {
-    //   console.log("on effect auto " + turn);
-    //   //////////// RANDOM MOVE ///////////////////////////////
-    //   let index = 0;
-    //   while (true) {
-    //     index = Math.floor(Math.random() * item.length);
-    //     if (item[index].status === "") break;
-    //   }
-    //   //      console.log("random : " + index);
-
-    //   let newItems = [...item];
-    //   newItems[index].status = "x";
-    //   setItem(newItems);
-    //   setTurn(turn + 1);
-    // }
-  }, [turn, items]);
+  }, [turn, items, allowEnter]);
 
   return (
     <div className="game-board">
       {console.log("on render " + turn)}
-      {/* {console.log("rendered turn: " + turn)} */}
       {items.map((item) => (
         <BoardCard key={item.id} turn={turn} onSubmit={handleNextTurn} item={item} allowEnter={allowEnter} winCard={line.includes(items.findIndex((i) => i === item))} />
       ))}
@@ -121,4 +115,4 @@ function GameBoard(props) {
   );
 }
 
-export default GameBoard;
+export default React.memo(GameBoard);

@@ -1,13 +1,12 @@
 # Tic-tac-toe build with React JS
 
-
 ## Available Scripts
 
 clone the project and open project directory:
 
 ### `cd tic-tac-toe`
 
-In the project directory, you can run:
+In the project directory, instaoll node module:
 
 ### `npm start`
 

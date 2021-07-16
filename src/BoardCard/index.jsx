@@ -11,7 +11,7 @@ function BoardCard(props) {
 
   const setActive = () => {
     if (status === "" && allowEnter) {
-      console.log("Clicked");
+      // console.log("Clicked");
       //   console.log("previus : " + turn);
       const value = turn % 2 === 0 ? "x" : "o";
 
@@ -20,7 +20,7 @@ function BoardCard(props) {
   };
 
   React.useEffect(() => {
-    console.log("on card effect " + turn);
+    // console.log("on card effect " + turn);
     if (status === "x") {
       setCard(<CardX active={true} winner={winCard} />);
     } else if (status === "o") {

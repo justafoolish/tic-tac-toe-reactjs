@@ -18,26 +18,24 @@ export default function App() {
   const [reset, setReset] = React.useState(false);
   const [gameOver, setGameOver] = React.useState({ status: false, winner: "" });
 
-  const handleResetGame = () => {
+  const handleResetGame = React.useCallback(() => {
     setReset(!reset);
     setGameOver({ status: false, winner: "" });
-  };
-  const handleGameOver = (status, winner) => {
-    console.log(gameOver);
+  },[reset])
+
+  const handleGameOver = React.useCallback((status, winner) => {
     setGameOver({ status: status, winner: winner });
-  };
-  React.useEffect(() => {
-    const log = () => {
-      if (gameOver.status) {
-        setTimeout(() => {
-          console.log(gameOver);
-          //Alert Modal Winner
-          //alert(gameOver.winner.toUpperCase());
-        }, 300);
-        setGameOver({ status: false, winner: "" });
-      }
-    };
-    log();
+    if (gameOver.status) {
+      const log = () => {
+        if (gameOver.status) {
+          setTimeout(() => {
+            console.log(gameOver);
+          }, 300);
+          setGameOver({ status: false, winner: "" });
+        }
+      };
+      log();
+    }
   }, [gameOver]);
 
   return (
