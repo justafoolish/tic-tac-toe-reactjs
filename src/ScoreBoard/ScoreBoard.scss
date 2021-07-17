@@ -1,0 +1,17 @@
+.scoreboard {
+  list-style-type: none;
+  display: flex;
+  padding-top: 2rem;
+  justify-content: space-around;
+  align-items: center;
+  li {
+    color: #595260;
+    font-weight: bold;
+    font-size: 1.75rem;
+    margin: 1rem;
+
+    div {
+      text-align: center;
+    }
+  }
+}

@@ -2,10 +2,12 @@
     //width: 100%;
     //min-height: 20vh;
     padding: 2.5rem 1rem;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   
     button {
+      margin: auto 1rem;
       padding: 0.75rem 2.25rem;
       cursor: pointer;
       border: none;

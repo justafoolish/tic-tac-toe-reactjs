@@ -2,6 +2,7 @@ import React from "react";
 import "./App.scss";
 import GameBoard from "./GameBoard";
 import Menu from "./Menu";
+import ScoreBoard from "./ScoreBoard";
 
 export default function App() {
   const listItem = [
@@ -16,41 +17,45 @@ export default function App() {
     { id: 9, status: "" },
   ];
   const [reset, setReset] = React.useState(false);
-  const [gameOver, setGameOver] = React.useState({ status: false, winner: "" });
+  const [scoreboard, setScoreboard] = React.useState([0, 0, 0]);
+  const [pvpMode, setPvpMode] = React.useState(true);
 
-  const handleResetGame = React.useCallback(() => {
+  const handleResetGame = () => {
     setReset(!reset);
-    setGameOver({ status: false, winner: "" });
-  },[reset])
-
-  const handleGameOver = React.useCallback((status, winner) => {
-    setGameOver({ status: status, winner: winner });
-    if (gameOver.status) {
-      const log = () => {
-        if (gameOver.status) {
-          setTimeout(() => {
-            console.log(gameOver);
-          }, 300);
-          setGameOver({ status: false, winner: "" });
-        }
-      };
-      log();
+  };
+  const handleGameMode = (gameMode) => {
+    if(gameMode !== pvpMode) {
+      setPvpMode(gameMode)
+      setReset(true)
+      setScoreboard([0,0,0])
     }
-  }, [gameOver]);
+  }
+
+  const handleScoreBoard = (resultGame) => {
+    if (resultGame === "x") {
+      let newScoreBoard = [...scoreboard];
+      newScoreBoard[0] = newScoreBoard[0] + 1;
+      setScoreboard(newScoreBoard);
+    } else if (resultGame === "o") {
+      let newScoreBoard = [...scoreboard];
+      newScoreBoard[1] = newScoreBoard[1] + 1;
+      setScoreboard(newScoreBoard);
+    } else if (resultGame === "tie") {
+      let newScoreBoard = [...scoreboard];
+      newScoreBoard[2] = newScoreBoard[2] + 1;
+      setScoreboard(newScoreBoard);
+    }
+  };
 
   return (
     <>
       <div className="container">
         <div className="grid--wrapper">
-          <div className="victory">
-            <div className="victory--x"></div>
-            <div className="victory--o"></div>
-          </div>
-
-          <GameBoard reset={reset} SubmitReset={handleResetGame} listItem={listItem} handleGameOver={handleGameOver} gameOver={gameOver.status} />
+          <GameBoard reset={reset} SubmitReset={handleResetGame} listItem={listItem} updateScoreBoard={handleScoreBoard} pvpMode={pvpMode}/>
         </div>
+        <ScoreBoard scoreboard={scoreboard} pvpMode={pvpMode} />
       </div>
-      <Menu resetGame={handleResetGame} />
+      <Menu resetGame={handleResetGame} onSubmit={handleGameMode}/>
     </>
   );
 }

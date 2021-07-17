@@ -11,8 +11,6 @@ function BoardCard(props) {
 
   const setActive = () => {
     if (status === "" && allowEnter) {
-      // console.log("Clicked");
-      //   console.log("previus : " + turn);
       const value = turn % 2 === 0 ? "x" : "o";
 
       onSubmit(id, value);

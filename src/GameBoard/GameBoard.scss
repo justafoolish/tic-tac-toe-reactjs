@@ -1,4 +1,19 @@
+.grid--wrapper {
+  display: inline-block;
+  width: 480px;
+  position: relative;
+}
+.grid--wrapper::after {
+  padding-top: 100%;
+  display: block;
+  content: "";
+}
 .game-board {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   display: grid;
@@ -6,10 +21,4 @@
   grid-template-rows: repeat(3, auto);
   place-items: center;
   grid-gap: 0.75rem;
-
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
 }

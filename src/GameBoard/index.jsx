@@ -7,24 +7,22 @@ GameBoard.propTypes = {
   reset: PropTypes.bool,
   SubmitReset: PropTypes.func,
   listItem: PropTypes.array.isRequired,
-  handleGameOver: PropTypes.func,
+  updateScoreBoard: PropTypes.func,
 };
 GameBoard.defaultProps = {
   reset: false,
   SubmitReset: null,
-  handleGameOver: null,
+  updateScoreBoard: null,
 };
 
 function GameBoard(props) {
-  const { reset, SubmitReset, listItem, handleGameOver } = props;
+  const { reset, SubmitReset, listItem, updateScoreBoard, pvpMode } = props;
   const [items, setItem] = React.useState(listItem);
   const [turn, setTurn] = React.useState(0);
   const [allowEnter, setAllowEnter] = React.useState(true);
   const [line, setLine] = React.useState([]);
 
   const handleNextTurn = (id, value) => {
-    // console.log("On handleNextTurn " + turn);
-    //console.log(item);
     let newItems = [...items];
     const index = newItems.findIndex((box) => box.id === id);
     if (index !== -1) {
@@ -83,12 +81,12 @@ function GameBoard(props) {
 
     const checkValue = turn % 2 === 0 ? "o" : "x";
     if (checkGame(checkValue)) {
+      updateScoreBoard(checkValue);
       setAllowEnter(false);
-      setTurn(turn - 1);
     } else if (!checkNull() && !checkGame("x") && !checkGame("o")) {
-      console.log(items);
+      updateScoreBoard("tie");
       setAllowEnter(false);
-    } else if (turn % 2 !== 0 && checkNull() && allowEnter) {
+    } else if (turn % 2 !== 0 && checkNull() && allowEnter && pvpMode) {
       let index = 0;
       while (true) {
         index = Math.floor(Math.random() * items.length);
@@ -103,11 +101,10 @@ function GameBoard(props) {
         }
       }
     }
-  }, [turn, items, allowEnter]);
+  }, [turn, items]);
 
   return (
     <div className="game-board">
-      {console.log("on render " + turn)}
       {items.map((item) => (
         <BoardCard key={item.id} turn={turn} onSubmit={handleNextTurn} item={item} allowEnter={allowEnter} winCard={line.includes(items.findIndex((i) => i === item))} />
       ))}
