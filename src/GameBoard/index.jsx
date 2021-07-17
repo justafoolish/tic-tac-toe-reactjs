@@ -101,7 +101,8 @@ function GameBoard(props) {
         }
       }
     }
-  }, [turn, items]);
+  }, [turn, items]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   return (
     <div className="game-board">
